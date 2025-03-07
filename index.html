@@ -48,6 +48,35 @@
         img:active {
             animation: pulse 1s infinite;
         }
+        .telegram-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #9370DB, #8A2BE2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(147, 112, 219, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        .telegram-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(147, 112, 219, 0.6);
+        }
+        .telegram-button svg {
+            color: white;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .telegram-button {
+            animation: float 3s ease-in-out infinite;
+        }
 
         /* Стили для модального окна */
         .modal-overlay {
@@ -77,6 +106,33 @@
                         inset 0 0 20px rgba(147, 112, 219, 0.3);
             animation: modalSlide 0.5s ease;
             z-index: 1001;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .channel-button {
+            background: linear-gradient(45deg, #9370DB, #8A2BE2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(147, 112, 219, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .channel-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(147, 112, 219, 0.5);
         }
 
         .modal-title {
@@ -126,6 +182,31 @@
         const audio = document.getElementById("myAudio");
         const image = document.getElementById("myImage");
         const modal = document.querySelector('.modal-overlay');
+        const channelsGrid = document.querySelector('.channels-grid');
+        
+        const channels = [
+            'https://t.me/m5stick_loni2',
+            'https://t.me/+QFjtYcgb7J9jYTJi'
+        ];
+        
+
+        function createChannelButtons() {
+            channelsGrid.innerHTML = channels.map(channel => {
+                let channelName = channel.replace('https://t.me/', '');
+                if (channelName === "+QFjtYcgb7J9jYTJi"){
+                channelName = "Палка 2.0";
+                }
+                return `
+                    <a href="${channel}" class="channel-button" target="_blank">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.25.38-.51 1.07-.78 4.2-1.82 7-3.03 8.4-3.61 4-.17 4.83 1.16 4.88 1.15z"/>
+                        </svg>
+                        ${channelName}
+                    </a>
+                `;
+            }).join('');
+        }
+
         
         createChannelButtons();
         image.addEventListener("click", function() {
